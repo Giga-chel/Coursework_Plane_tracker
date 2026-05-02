@@ -31,3 +31,16 @@ class TestAeroplane(unittest.TestCase):
         self.assertTrue(p2.is_faster_than(p1))
         self.assertFalse(p1.is_faster_than(p2))
 
+    def test_cast_to_object_list(self):
+        """Тест конвертации сырых данных API в список объектов."""
+        raw_data = [
+            [0, "TST123", "France", 0, 0, 0, 0, 0, False, 150.5, 0, 0, 0, 8000.0],
+            [1, None, None, 0, 0, 0, 0, 0, True, None, 0, 0, 0, None]  # Самолет на земле
+        ]
+        planes = Aeroplane.cast_to_object_list(raw_data)
+
+        self.assertEqual(len(planes), 2)
+        self.assertEqual(planes[0].callsign, "TST123")
+        self.assertEqual(planes[0].velocity, 150.5)
+        self.assertEqual(planes[1].callsign, "N/A")  # Проверка работы с None
+        self.assertTrue(planes[1].on_ground)
