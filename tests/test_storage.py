@@ -18,3 +18,13 @@ class TestJSONSaver(unittest.TestCase):
         """Удаляем временный файл после теста."""
         if os.path.exists(self.temp_file):
             os.remove(self.temp_file)
+
+    def test_add_and_save_all(self):
+        """Тест добавления и полного сохранения."""
+        self.saver.add_aeroplane(self.plane1)
+        data = self.saver.get_aeroplanes()
+        self.assertEqual(len(data), 1)
+
+        self.saver.save_all_aeroplanes([self.plane1, self.plane2])
+        data = self.saver.get_aeroplanes()
+        self.assertEqual(len(data), 2)
