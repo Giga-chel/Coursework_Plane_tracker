@@ -4,8 +4,8 @@ from src.api import AeroplanesAPI
 
 class TestAeroplanesAPI(unittest.TestCase):
 
-    @patch("src.api.requests.Session")
     @patch("src.api.AeroplanesAPI.get_country_bounding_box")
+    @patch("src.api.requests.Session")
     def test_get_aeroplanes_success(self, mock_session_class, mock_bb_method):
         mock_bb_method.return_value = (0.0, 0.0, 0.0, 0.0)
         fake_response = MagicMock()

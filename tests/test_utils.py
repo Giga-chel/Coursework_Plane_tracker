@@ -1,4 +1,5 @@
 import unittest
+from src.utils import filter_aeroplanes, get_aeroplanes_by_altitude, get_top_aeroplanes
 from src.models import Aeroplane
 
 class TestUtils(unittest.TestCase):
