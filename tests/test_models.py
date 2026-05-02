@@ -44,3 +44,6 @@ class TestAeroplane(unittest.TestCase):
         self.assertEqual(planes[0].velocity, 150.5)
         self.assertEqual(planes[1].callsign, "N/A")  # Проверка работы с None
         self.assertTrue(planes[1].on_ground)
+
+if __name__ == '__main__':
+    unittest.main()
