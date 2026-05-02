@@ -28,3 +28,11 @@ class TestJSONSaver(unittest.TestCase):
         self.saver.save_all_aeroplanes([self.plane1, self.plane2])
         data = self.saver.get_aeroplanes()
         self.assertEqual(len(data), 2)
+
+    def test_get_aeroplanes_with_filters(self):
+        """Тест получения данных по критериям (kwargs)."""
+        self.saver.save_all_aeroplanes([self.plane1, self.plane2])
+        filtered = self.saver.get_aeroplanes(origin_country="Germany")
+        self.assertEqual(len(filtered), 1)
+        self.assertEqual(filtered[0].callsign, "TST1")
+
