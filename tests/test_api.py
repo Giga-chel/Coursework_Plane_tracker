@@ -1,6 +1,8 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 from src.api import AeroplanesAPI
+
 
 class TestAeroplanesAPI(unittest.TestCase):
 
@@ -10,7 +12,8 @@ class TestAeroplanesAPI(unittest.TestCase):
         mock_bb_method.return_value = (0.0, 0.0, 0.0, 0.0)
         fake_response = MagicMock()
         fake_response.json.return_value = {
-            "states": [["TST1", "France", 0, 0, 0, 0, 0, 0, False, 150.5, 0, 0, 0, 8000.0]]}
+            "states": [["TST1", "France", 0, 0, 0, 0, 0, 0, False, 150.5, 0, 0, 0, 8000.0]]
+        }
         fake_response.status_code = 200
         mock_session_class.return_value.get.return_value = fake_response
 

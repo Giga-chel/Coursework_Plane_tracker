@@ -1,4 +1,5 @@
 import unittest
+
 from src.models import Aeroplane
 
 
@@ -41,12 +42,11 @@ class TestAeroplane(unittest.TestCase):
         self.assertEqual(p2, p3)
         self.assertGreaterEqual(p4, p3)
 
-
     def test_cast_to_object_list(self):
         """Тест конвертации сырых данных API в список объектов."""
         raw_data = [
             [0, "TST123", "France", 0, 0, 0, 0, 0, False, 150.5, 0, 0, 0, 8000.0],
-            [1, None, None, 0, 0, 0, 0, 0, True, None, 0, 0, 0, None]  # Самолет на земле
+            [1, None, None, 0, 0, 0, 0, 0, True, None, 0, 0, 0, None],  # Самолет на земле
         ]
         planes = Aeroplane.cast_to_object_list(raw_data)
 
@@ -56,5 +56,6 @@ class TestAeroplane(unittest.TestCase):
         self.assertEqual(planes[1].callsign, "N/A")  # Проверка работы с None
         self.assertTrue(planes[1].on_ground)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

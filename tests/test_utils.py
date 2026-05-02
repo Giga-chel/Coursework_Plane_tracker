@@ -1,6 +1,8 @@
 import unittest
-from src.utils import filter_aeroplanes, get_aeroplanes_by_altitude, get_top_aeroplanes
+
 from src.models import Aeroplane
+from src.utils import filter_aeroplanes, get_aeroplanes_by_altitude, get_top_aeroplanes
+
 
 class TestUtils(unittest.TestCase):
 
@@ -27,13 +29,14 @@ class TestUtils(unittest.TestCase):
         """Тест получения Топ N по высоте."""
         top_2 = get_top_aeroplanes(self.planes, 2)
         self.assertEqual(len(top_2), 2)
-        self.assertEqual(top_2[0].callsign, "A2") # 10000 м
-        self.assertEqual(top_2[1].callsign, "A3") # 8000 м
+        self.assertEqual(top_2[0].callsign, "A2")  # 10000 м
+        self.assertEqual(top_2[1].callsign, "A3")  # 8000 м
 
     def test_get_top_aeroplanes_by_velocity(self):
         """Тест получения Топ N по скорости."""
-        top_1 = get_top_aeroplanes(self.planes, 1, sort_by='velocity')
-        self.assertEqual(top_1[0].callsign, "A2") # 200 м/с
+        top_1 = get_top_aeroplanes(self.planes, 1, sort_by="velocity")
+        self.assertEqual(top_1[0].callsign, "A2")  # 200 м/с
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

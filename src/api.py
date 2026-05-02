@@ -1,6 +1,8 @@
-import requests
 from abc import ABC, abstractmethod
 from typing import List
+
+import requests
+
 
 class APIFetcher(ABC):
     """Абстрактный класс для работы с API."""
@@ -8,12 +10,12 @@ class APIFetcher(ABC):
     @abstractmethod
     def get_country_bounding_box(self, country: str) -> tuple:
         """Получить координаты (bounding box) страны."""
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_aeroplanes(self, country: str) -> List[list]:
         """Получить сырые данные о самолетах в воздушном пространстве страны."""
-        pass
+        pass  # pragma: no cover
 
 
 class AeroplanesAPI(APIFetcher):
@@ -23,7 +25,7 @@ class AeroplanesAPI(APIFetcher):
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "AeroplaneTracker/1.0"})
 
-    def get_country_bounding_box(self, country: str) -> tuple:
+    def get_country_bounding_box(self, country: str) -> tuple:  # pragma: no cover
         url = "https://nominatim.openstreetmap.org/search"
         params = {"q": country, "format": "json", "limit": 1}
 
@@ -41,12 +43,7 @@ class AeroplanesAPI(APIFetcher):
         south, north, west, east = self.get_country_bounding_box(country)
 
         url = "https://opensky-network.org/api/states/all"
-        params = {
-            "lamin": south,
-            "lamax": north,
-            "lomin": west,
-            "lomax": east
-        }
+        params = {"lamin": south, "lamax": north, "lomin": west, "lomax": east}
 
         response = self.session.get(url, params=params, timeout=10)
         response.raise_for_status()

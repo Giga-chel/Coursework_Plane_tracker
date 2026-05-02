@@ -1,5 +1,6 @@
 from functools import total_ordering
-from typing import List, Any, Dict, Optional
+from typing import Any, Dict, List, Optional
+
 
 @total_ordering
 class Aeroplane:
@@ -52,18 +53,18 @@ class Aeroplane:
     def on_ground(self, value: bool):
         self._on_ground = bool(value)
 
-    def is_higher_than(self, other: 'Aeroplane') -> bool:
+    def is_higher_than(self, other: "Aeroplane") -> bool:
         return self.altitude > other.altitude
 
-    def is_faster_than(self, other: 'Aeroplane') -> bool:
+    def is_faster_than(self, other: "Aeroplane") -> bool:
         return self.velocity > other.velocity
 
-    def __eq__(self, other: 'Aeroplane') -> bool:
+    def __eq__(self, other: "Aeroplane") -> bool:
         if not isinstance(other, Aeroplane):
             return NotImplemented
         return self.altitude == other.altitude
 
-    def __lt__(self, other: 'Aeroplane') -> bool:
+    def __lt__(self, other: "Aeroplane") -> bool:
         if not isinstance(other, Aeroplane):
             return NotImplemented
         return self.altitude < other.altitude
@@ -78,11 +79,11 @@ class Aeroplane:
             "origin_country": self.origin_country,
             "velocity": self.velocity,
             "altitude": self.altitude,
-            "on_ground": self.on_ground
+            "on_ground": self.on_ground,
         }
 
     @classmethod
-    def cast_to_object_list(cls, raw_data: List[list]) -> List['Aeroplane']:
+    def cast_to_object_list(cls, raw_data: List[list]) -> List["Aeroplane"]:
         """Превращает ответ API в список объектов Aeroplane."""
         aeroplanes = []
         for state in raw_data:
