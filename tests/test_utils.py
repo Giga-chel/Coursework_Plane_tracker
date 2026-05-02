@@ -22,3 +22,10 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(len(ranged), 2)
         self.assertTrue(all(6000 <= p.altitude <= 11000 for p in ranged))
 
+    def test_get_top_aeroplanes_by_altitude(self):
+        """Тест получения Топ N по высоте."""
+        top_2 = get_top_aeroplanes(self.planes, 2)
+        self.assertEqual(len(top_2), 2)
+        self.assertEqual(top_2[0].callsign, "A2") # 10000 м
+        self.assertEqual(top_2[1].callsign, "A3") # 8000 м
+
