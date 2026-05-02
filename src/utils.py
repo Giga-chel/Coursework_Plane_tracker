@@ -1,0 +1,34 @@
+from src.models import Aeroplane
+from typing import List
+
+def filter_aeroplanes(aeroplanes: List[Aeroplane], countries: List[str]) -> List[Aeroplane]:
+    if not countries: return aeroplanes
+    countries_lower = [c.lower() for c in countries]
+    return [p for p in aeroplanes if p.origin_country.lower() in countries_lower]
+
+
+def get_aeroplanes_by_altitude(aeroplanes: List[Aeroplane], altitude_range: str) -> List[Aeroplane]:
+    if not altitude_range or '-' not in altitude_range: return aeroplanes
+    try:
+        parts = altitude_range.split('-')
+        min_alt = float(parts[0].strip())
+        max_alt = float(parts[1].strip())
+        return [p for p in aeroplanes if min_alt <= p.altitude <= max_alt]
+    except ValueError:
+        print("Неверный формат диапазона высот.")
+        return aeroplanes
+
+
+def get_top_aeroplanes(aeroplanes: List[Aeroplane], n: int, sort_by: str = 'altitude') -> List[Aeroplane]:
+    key_func = lambda x: x.velocity if sort_by == 'velocity' else x.altitude
+    return sorted(aeroplanes, key=key_func, reverse=True)[:n]
+
+def print_aeroplanes(aeroplanes: List[Aeroplane]) -> None:
+    if not aeroplanes:
+        print("Самолеты по заданным критериям не найдены.\n")
+        return
+    print(f"{'Позывной':<15} | {'Страна рег.':<20} | {'Высота (м)':<15} | {'Скорость (м/с)':<15}")
+    print("-" * 75)
+    for p in aeroplanes:
+        print(f"{p.callsign:<15} | {p.origin_country:<20} | {p.altitude:<15.2f} | {p.velocity:<15.2f}")
+    print()
