@@ -13,3 +13,11 @@ class TestAeroplane(unittest.TestCase):
         self.assertEqual(plane.altitude, 10203.18)
         self.assertFalse(plane.on_ground)
 
+    def test_validation_none_values(self):
+        """Тест валидации данных (замена None на значения по умолчанию)."""
+        plane = Aeroplane(None, None, None, None, None)
+        self.assertEqual(plane.callsign, "N/A")
+        self.assertEqual(plane.origin_country, "Unknown")
+        self.assertEqual(plane.velocity, 0.0)
+        self.assertEqual(plane.altitude, 0.0)
+
