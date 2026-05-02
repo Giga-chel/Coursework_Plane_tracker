@@ -36,3 +36,12 @@ class TestJSONSaver(unittest.TestCase):
         self.assertEqual(len(filtered), 1)
         self.assertEqual(filtered[0].callsign, "TST1")
 
+    def test_delete_aeroplane(self):
+        """Тест удаления самолета из хранилища."""
+        self.saver.save_all_aeroplanes([self.plane1, self.plane2])
+        self.saver.delete_aeroplane(self.plane1)
+
+        data = self.saver.get_aeroplanes()
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0].callsign, "TST2")
+
