@@ -16,3 +16,9 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(len(filtered), 2)
         self.assertTrue(all(p.origin_country == "USA" for p in filtered))
 
+    def test_get_aeroplanes_by_altitude(self):
+        """Тест фильтрации по диапазону высот."""
+        ranged = get_aeroplanes_by_altitude(self.planes, "6000 - 11000")
+        self.assertEqual(len(ranged), 2)
+        self.assertTrue(all(6000 <= p.altitude <= 11000 for p in ranged))
+
