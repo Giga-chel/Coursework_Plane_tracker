@@ -49,3 +49,7 @@ class TestJSONSaver(unittest.TestCase):
         """Тест проверки заглушки для метода update."""
         with self.assertRaises(NotImplementedError):
             self.saver.update_aeroplane(self.plane1)
+
+
+if __name__ == '__main__':
+    unittest.main()
