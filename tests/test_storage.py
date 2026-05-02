@@ -19,15 +19,19 @@ class TestJSONSaver(unittest.TestCase):
         if os.path.exists(self.temp_file):
             os.remove(self.temp_file)
 
-    def test_add_and_save_all(self):
+    def test_save_all_merges_and_updates(self):
         """Тест добавления и полного сохранения."""
         self.saver.add_aeroplane(self.plane1)
         data = self.saver.get_aeroplanes()
         self.assertEqual(len(data), 1)
 
-        self.saver.save_all_aeroplanes([self.plane1, self.plane2])
+        self.plane1_updated = Aeroplane("TST1", "Germany", 120.0, 7500.0)
+
+        self.saver.save_all_aeroplanes([self.plane1_updated, self.plane2])
         data = self.saver.get_aeroplanes()
         self.assertEqual(len(data), 2)
+        self.assertEqual(data[0].altitude, 7500.0)
+        self.assertEqual(data[0].callsign, "TST1")
 
     def test_get_aeroplanes_with_filters(self):
         """Тест получения данных по критериям (kwargs)."""
