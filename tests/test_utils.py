@@ -29,3 +29,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(top_2[0].callsign, "A2") # 10000 м
         self.assertEqual(top_2[1].callsign, "A3") # 8000 м
 
+    def test_get_top_aeroplanes_by_velocity(self):
+        """Тест получения Топ N по скорости."""
+        top_1 = get_top_aeroplanes(self.planes, 1, sort_by='velocity')
+        self.assertEqual(top_1[0].callsign, "A2") # 200 м/с
+
