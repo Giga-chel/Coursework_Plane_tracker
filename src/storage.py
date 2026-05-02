@@ -83,6 +83,8 @@ class JSONSaver(Storage):
         self._write_file(new_data)
 
     def save_all_aeroplanes(self, aeroplanes: list[Aeroplane]) -> None:
-        data = [aeroplane.to_dict() for aeroplane in aeroplanes]
-        self._write_file(data)
+        old_data = self._read_file()
+        new_data = [aeroplane.to_dict() for aeroplane in aeroplanes]
+        merged_dict = {item['callsign']: item for item in (old_data + new_data)}
+        self._write_file(list(merged_dict.values()))
 
