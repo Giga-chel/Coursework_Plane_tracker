@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 from src.models import Aeroplane
 from typing import List
 
@@ -11,16 +13,15 @@ def get_aeroplanes_by_altitude(aeroplanes: List[Aeroplane], altitude_range: str)
     if not altitude_range or '-' not in altitude_range: return aeroplanes
     try:
         parts = altitude_range.split('-')
-        min_alt = float(parts[0].strip())
-        max_alt = float(parts[1].strip())
-        return [p for p in aeroplanes if min_alt <= p.altitude <= max_alt]
+        min_alt_plane, max_alt_plane = sorted([float(ap.strip()) for ap in parts])
+        return [p for p in aeroplanes if min_alt_plane <= p.altitude <= max_alt_plane]
     except ValueError:
         print("Неверный формат диапазона высот.")
         return aeroplanes
 
 
 def get_top_aeroplanes(aeroplanes: List[Aeroplane], n: int, sort_by: str = 'altitude') -> List[Aeroplane]:
-    key_func = lambda x: x.velocity if sort_by == 'velocity' else x.altitude
+    key_func = attrgetter(sort_by)
     return sorted(aeroplanes, key=key_func, reverse=True)[:n]
 
 def print_aeroplanes(aeroplanes: List[Aeroplane]) -> None:
