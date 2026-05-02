@@ -34,3 +34,5 @@ class TestUtils(unittest.TestCase):
         top_1 = get_top_aeroplanes(self.planes, 1, sort_by='velocity')
         self.assertEqual(top_1[0].callsign, "A2") # 200 м/с
 
+if __name__ == '__main__':
+    unittest.main()
