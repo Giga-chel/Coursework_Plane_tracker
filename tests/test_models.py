@@ -21,3 +21,13 @@ class TestAeroplane(unittest.TestCase):
         self.assertEqual(plane.velocity, 0.0)
         self.assertEqual(plane.altitude, 0.0)
 
+    def test_comparison_methods(self):
+        """Тест методов сравнения по высоте и скорости."""
+        p1 = Aeroplane("A", "Country1", 100.0, 5000.0)
+        p2 = Aeroplane("B", "Country2", 200.0, 10000.0)
+
+        self.assertTrue(p1 < p2)  # Тест __lt__ (по высоте)
+        self.assertTrue(p2.is_higher_than(p1))
+        self.assertTrue(p2.is_faster_than(p1))
+        self.assertFalse(p1.is_faster_than(p2))
+
