@@ -1,5 +1,7 @@
+from functools import total_ordering
 from typing import List, Any, Dict, Optional
 
+@total_ordering
 class Aeroplane:
     """Класс, представляющий самолет."""
 
@@ -56,7 +58,14 @@ class Aeroplane:
     def is_faster_than(self, other: 'Aeroplane') -> bool:
         return self.velocity > other.velocity
 
+    def __eq__(self, other: 'Aeroplane') -> bool:
+        if not isinstance(other, Aeroplane):
+            return NotImplemented
+        return self.altitude == other.altitude
+
     def __lt__(self, other: 'Aeroplane') -> bool:
+        if not isinstance(other, Aeroplane):
+            return NotImplemented
         return self.altitude < other.altitude
 
     def __repr__(self):

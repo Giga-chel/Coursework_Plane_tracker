@@ -31,6 +31,17 @@ class TestAeroplane(unittest.TestCase):
         self.assertTrue(p2.is_faster_than(p1))
         self.assertFalse(p1.is_faster_than(p2))
 
+    def test_total_ordering_difference(self):
+        """Тест двух самолетов с разной и одинаковой высотой."""
+        p1 = Aeroplane("A", "Country1", 100.0, 5000.0)
+        p2 = Aeroplane("B", "Country2", 200.0, 10000.0)
+        p3 = Aeroplane("C", "Country3", 300.0, 10000.0)
+        p4 = Aeroplane("D", "Country4", 200.0, 15000.0)
+        self.assertLessEqual(p1, p2)
+        self.assertEqual(p2, p3)
+        self.assertGreaterEqual(p4, p3)
+
+
     def test_cast_to_object_list(self):
         """Тест конвертации сырых данных API в список объектов."""
         raw_data = [
