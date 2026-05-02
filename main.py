@@ -1,3 +1,5 @@
+import json
+import os
 import requests
 from abc import ABC, abstractmethod
 from typing import List, Any, Dict, Optional
@@ -143,3 +145,76 @@ class Aeroplane:
 
             aeroplanes.append(cls(callsign, origin_country, velocity, altitude, on_ground))
         return aeroplanes
+
+
+class Storage(ABC):
+    """Абстрактный класс (Коннектор) для хранилища данных."""
+
+    @abstractmethod
+    def add_aeroplane(self, aeroplane: Aeroplane) -> None:
+        """Добавить информацию о самолете."""
+        pass
+
+    @abstractmethod
+    def update_aeroplane(self, aeroplane: Aeroplane) -> None:
+        """Обновить информацию о самолете."""
+        pass
+
+    @abstractmethod
+    def get_aeroplanes(self, **kwargs) -> List[Aeroplane]:
+        """Получить самолеты по критериям (фильтрация через kwargs)."""
+        pass
+
+    @abstractmethod
+    def delete_aeroplane(self, aeroplane: Aeroplane) -> None:
+        """Удалить информацию о самолете."""
+        pass
+
+
+class JSONSaver(Storage):
+    """Класс для сохранения и чтения данных о самолетах в JSON-файл."""
+
+    def __init__(self, filename: str = "data/aeroplanes.json"):
+        dir_name = os.path.dirname(filename)
+        os.makedirs(dir_name, exist_ok=True)
+        self.filename = filename
+
+    def _read_file(self) -> List[Dict]:
+        if not os.path.exists(self.filename):
+            return []
+        with open(self.filename, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                return []
+
+    def _write_file(self, data: List[Dict]) -> None:
+        with open(self.filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
+    def add_aeroplane(self, aeroplane: Aeroplane) -> None:
+        data = self._read_file()
+        data.append(aeroplane.to_dict())
+        self._write_file(data)
+
+    def update_aeroplane(self, aeroplane: Aeroplane) -> None:
+        raise NotImplementedError("Обновление отдельных записей не поддерживается в JSON-формате.")
+
+    def get_aeroplanes(self, **kwargs) -> List[Aeroplane]:
+        data = self._read_file()
+        results = []
+        for item in data:
+            match = all(item.get(k) == v for k, v in kwargs.items())
+            if match:
+                results.append(Aeroplane(**item))
+        return results
+
+    def delete_aeroplane(self, aeroplane: Aeroplane) -> None:
+        data = self._read_file()
+        target = aeroplane.to_dict()
+        new_data = [
+            item for item in data
+            if not (item.get("callsign") == target["callsign"] and
+                    item.get("origin_country") == target["origin_country"])
+        ]
+        self._write_file(new_data)
