@@ -27,7 +27,7 @@ class AeroplanesAPI(APIFetcher):
         url = "https://nominatim.openstreetmap.org/search"
         params = {"q": country, "format": "json", "limit": 1}
 
-        response = self.session.get(url, params=params)
+        response = self.session.get(url, params=params, timeout=10)
         response.raise_for_status()
         data = response.json()
 
@@ -48,7 +48,7 @@ class AeroplanesAPI(APIFetcher):
             "lomax": east
         }
 
-        response = self.session.get(url, params=params)
+        response = self.session.get(url, params=params, timeout=10)
         response.raise_for_status()
         data = response.json()
         return data.get("states", [])
