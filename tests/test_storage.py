@@ -45,3 +45,7 @@ class TestJSONSaver(unittest.TestCase):
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0].callsign, "TST2")
 
+    def test_update_stub(self):
+        """Тест проверки заглушки для метода update."""
+        with self.assertRaises(NotImplementedError):
+            self.saver.update_aeroplane(self.plane1)
